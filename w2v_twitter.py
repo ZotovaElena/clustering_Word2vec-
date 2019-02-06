@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jan 24 13:19:47 2019
-
-@author: elena.zotova
-"""
-
 import gensim, logging
 import pandas as pd
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
