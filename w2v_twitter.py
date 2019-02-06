@@ -10,7 +10,8 @@ import pandas as pd
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import numpy as np
 
-#Getting text corpus from our tweets. We cleaned it before.  
+#Getting text corpus from our tweets. We cleaned it before. 
+#I use lemmatized text, because all the words in the word2vec model are in their first form.
 tweets = pd.read_csv('tweets_clean.csv', sep='\t')
 tweets = tweets.fillna('')
 tweets_text = tweets.text_lemmatized.values
@@ -29,13 +30,13 @@ w2v_indices = {word: model.wv.vocab[word].index for word in model.wv.vocab}
 num_features = model.vector_size
 vocab = model.vocab.keys()
 
-#How many words are in the model? 
+#How many words are there in the model? 
 print(len(model.vocab))
 #How similar are the words?
 print (model.similarity('новость', 'новый'))
 print (model.most_similar(positive=['камень'], negative=[], topn=2))
 
-#For clustering tweets we need to get a vector per tweet. This vector will be a mean of all vectors of the words of each tweet. 
+#For clustering tweets, we need to get a vector per tweet. This vector will be a mean of all vectors of the words of each tweet. 
 def featureVecMethod(words, model, num_features):
     # Pre-initialising empty numpy array for speed
     featureVec = np.zeros(num_features,dtype="float32")
@@ -53,7 +54,7 @@ def featureVecMethod(words, model, num_features):
             featureVec = featureVec + model[word]
         else:
            not_in_model.append(word)
-    #Here we can see if some of our words are not in the model, so we cannot use them for the clustering       
+    #Here we can see if some of the words are not in the model, if so, we cannot use them for the clustering       
     print(not_in_model)
     # Dividing the result by number of words to get average
     if nwords != 0:
